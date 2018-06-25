@@ -21,8 +21,10 @@ class Core {
 		self::$http = new \Curl\Curl();
 	}
 
+	use Base;
 
-	private static function set_url ($url)
+
+	private static function set_url (&$url)
 	{
 		$domain = self::$dev_mode ? self::API_URL_FOR_DEVELOPMENT : self::API_URL;
 		return $domain.$url;

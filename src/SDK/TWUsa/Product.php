@@ -5,7 +5,7 @@ trait Product {
 
 	// 添加商品
 	protected static $addSku = 'agent/v1/skus/skus/addskus';
-	protected static function addSku (array $param)
+	protected static function addSku (array &$param)
 	{
 		return [
 			'product_sn' => $param['product_sn'], # sku
@@ -30,7 +30,7 @@ trait Product {
 
 
 	// 编辑商品
-	protected static function editSku (Request &$req)
+	protected static function editSku (array &$param)
 	{
 
 //		static::setUrl('agent/v1/skus/skus/addskus', $req->has('dev']);
