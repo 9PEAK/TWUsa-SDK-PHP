@@ -108,7 +108,7 @@ class Core {
 		try {
 
 			#1 设置url
-			$url = self::set_url($func);
+			$url = self::set_url(self::$$func);
 
 			#2 设置参数
 			$param = self::set_param(static::$func($param));
