@@ -45,6 +45,8 @@ class Core {
 		return md5($str);
 	}
 
+
+
 	private static function set_param ($param)
 	{
 		$param['apikey'] = self::$api_key;
@@ -55,6 +57,7 @@ class Core {
 	}
 
 
+	public $debug = null;
 
 	/**
 	 * 4 获取请求的数据
@@ -63,9 +66,8 @@ class Core {
 	 * */
 	private static function response ($key=null)
 	{
-		$res = self::$http->response;
+		$res = json_decode(json_encode(self::$http->response), 1);
 		if ($key) {
-			$res = is_string($res) ? json_decode($res, 1) : (array)$res ;
 			$key = explode('.', $key);
 			foreach ($key as $k) {
 				$res = @$res[$k];
@@ -76,25 +78,6 @@ class Core {
 
 
 
-/*
-	private static function set_url_query ($query)
-	{
-		if (!$query) return '';
-
-		if (is_array($query)) {
-			foreach ($query as $k=>&$v) {
-				$v = $k.'='.$v;
-			}
-			return '?'.join('&', $query);
-		} else {
-			$query = trim($query);
-			return strpos($query, '?')===0 ? $query : '?'.$query;
-		}
-	}
-
-
-	protected static $req_param = [];
-*/
 
 	/**
 	 * 跨应用标准化请求业务
@@ -117,12 +100,13 @@ class Core {
 			$http->post($url, $param);
 
 			#4 获取返回值
+
 			if ($http->error) {
 				throw new \Exception(json_encode([
 					'url' => $url,
 					'param' => $param,
 					'error' => 'Error: ' . $http->errorCode . ': ' . $http->errorMessage,
-					'response' => is_string($http->response) ? json_decode($http->response, 1) : (array)$http->response
+					'response' => self::response()
 				]));
 			}
 
@@ -133,7 +117,7 @@ class Core {
 			throw new \Exception(json_encode(self::$http->response));
 
 		} catch ( \Exception $e) {
-			echo 'ERROR: '.$e->getMessage();
+			$this->debug = json_decode($e->getMessage(), 1);
 		}
 
 	}

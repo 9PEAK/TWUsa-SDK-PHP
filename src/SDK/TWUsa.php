@@ -18,7 +18,7 @@ class TWUsa {
 
 	public function addSku ($param)
 	{
-		return self::$sdk->request(__FUNCTION__, $param);
+		return self::$sdk->request(__FUNCTION__, $param) ?: self::$sdk->debug;
 	}
 
 }
