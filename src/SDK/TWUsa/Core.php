@@ -124,6 +124,6 @@ class Core {
 
 
 
-	use Product;
+	use Product, Inventory;
 
 }
