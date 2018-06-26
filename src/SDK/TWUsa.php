@@ -21,4 +21,14 @@ class TWUsa {
 		return self::$sdk->request(__FUNCTION__, $param) ?: self::$sdk->debug;
 	}
 
+
+	public function getInventoryDetail($storeName, $productSn)
+	{
+		$res = self::$sdk->request(__FUNCTION__, [
+			'store_name' => $storeName,
+			'product_sn' => $productSn
+		]);
+		return $res ?: self::$sdk->debug;
+	}
+
 }

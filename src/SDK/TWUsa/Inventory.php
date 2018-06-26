@@ -13,7 +13,7 @@ trait Inventory {
 	{
 		return [
 			'store_name' => $param['store_name'],
-			'product_sn' => $param['product_sn'],
+			'product_sn' => is_string($param['product_sn']) ? $param['product_sn'] : join(',', $param['product_sn']),
 		];
 	}
 
