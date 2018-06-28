@@ -17,7 +17,7 @@ class TWUsa {
 
 
 	public $result;
-	public function addSku ($param)
+	public function addSku ($param):bool
 	{
 		$res = self::$sdk->request(__FUNCTION__, $param);
 		$this->result = self::$sdk->result;
@@ -25,7 +25,7 @@ class TWUsa {
 	}
 
 
-	public function getInventoryDetail($storeName, $productSn)
+	public function getInventoryDetail($storeName, $productSn):bool
 	{
 		$res = self::$sdk->request(__FUNCTION__, [
 			'store_name' => $storeName,
