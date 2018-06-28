@@ -69,7 +69,6 @@ class Core {
 	}
 
 
-
 	/**
 	 * 跨应用标准化请求业务
 	 * @param $func method name of request
