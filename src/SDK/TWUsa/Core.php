@@ -8,7 +8,6 @@ class Core {
 
 
 	private static $api_key, $api_secret, $dev_mode;
-	private static $http;
 
 	/**
 	 * @param $auth array , key is the class name of authenticate method, val is certificate
@@ -18,7 +17,6 @@ class Core {
 		self::$api_key = $apiKey;
 		self::$api_secret = $apiSecret;
 		self::$dev_mode = $devMod;
-		self::$http = new \Curl\Curl();
 	}
 
 	use Base;
@@ -57,25 +55,18 @@ class Core {
 	}
 
 
-	public $debug = null;
+
+	public $result = null;
 
 	/**
 	 * 4 获取请求的数据
 	 * @param $key 支持链式调用 默认null，整个请求结果
 	 * @return mixed array | string
 	 * */
-	private static function response ($key=null)
+	private static function response ($dat, $key=null)
 	{
-		$res = json_decode(json_encode(self::$http->response), 1);
-		if ($key) {
-			$key = explode('.', $key);
-			foreach ($key as $k) {
-				$res = @$res[$k];
-			}
-		}
-		return $res;
+		return \Peak\Tool\Arr::array_key_chain(is_array($dat) ? $dat : json_decode(json_encode($dat), 1), $key, '.');
 	}
-
 
 
 
@@ -86,7 +77,7 @@ class Core {
 	 * */
 	final public function request ($func, array $param)
 	{
-		$http =& self::$http;
+		$http = new \Curl\Curl();
 
 		try {
 
@@ -100,24 +91,25 @@ class Core {
 			$http->post($url, $param);
 
 			#4 获取返回值
-
 			if ($http->error) {
 				throw new \Exception(json_encode([
 					'url' => $url,
 					'param' => $param,
 					'error' => 'Error: ' . $http->errorCode . ': ' . $http->errorMessage,
-					'response' => self::response()
+					'response' =>$http->response
 				]));
 			}
 
-			if (self::response('status')==200) {
-				return self::response('result');
+			if (@self::response($http->response, 'status')==200) {
+				$this->result = self::response($http->response, 'result');
+				return true;
 			}
 
-			throw new \Exception(json_encode(self::$http->response));
+			throw new \Exception(json_encode($http->response));
 
 		} catch ( \Exception $e) {
-			$this->debug = json_decode($e->getMessage(), 1);
+			$this->result = json_decode($e->getMessage(), 1);
+			return false;
 		}
 
 	}
