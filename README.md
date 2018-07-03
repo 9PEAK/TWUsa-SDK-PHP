@@ -32,5 +32,16 @@ if ( $res) {
 ```
 
 ### 编写
+SDK由三部分组成
+<ul>
+	<li>内核</li>
+	<li>内核模块（内置的方法对接美仓API）</li>
+	<li>调用层（外部调用）</li>
+</ul>
+
 ![avatar](http://storage-qiniu.9peak.net/9peak-twusa-sdk-php.png)
+
+后续开发无需关心“内核”，只需要专注调用层和内核模块。
+
+>> 内核模块
 
