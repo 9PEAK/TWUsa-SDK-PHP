@@ -41,7 +41,28 @@ SDK由三部分组成
 
 ![avatar](http://storage-qiniu.9peak.net/9peak-twusa-sdk-php.png)
 
-后续开发无需关心“内核”，只需要专注调用层和内核模块。
+后续开发无需关心“内核”，只需要专注内核模块和调用层的开发。
 
->> 内核模块
+内核模块
+<ul>
+	<li>存储位置：Peak\SDK\TWUsa\Module；</li>
+	<li>方法、属性与API接口一一对应；</li>
+	<li>方法、属性务必使用 <b>protected static</b> 修饰。 </li>
+	</ul>
 
+```php
+/**
+     * add a new sale order
+     * */
+     # 和方法同名的属性，定义api请求的url
+	protected static $cancelOrder = 'agent/v1/orders/order/cancel';
+	# 方法构造api的参数
+    protected static function cancelOrder (array &$param )
+    {
+        return [
+            'store_name' => $param['store_name'], # 仓库名称
+            'order_sn' => $param['order_sn'], # 平台订单号
+        ];
+
+    }
+```
