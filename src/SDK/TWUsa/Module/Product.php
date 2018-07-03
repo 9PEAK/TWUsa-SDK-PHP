@@ -1,5 +1,5 @@
 <?php
-namespace Peak\SDK\TWUsa;
+namespace Peak\SDK\TWUsa\Module;
 
 trait Product {
 

@@ -1,6 +1,8 @@
 <?php
 namespace Peak\SDK\TWUsa;
 
+use Peak\SDK\TWUsa\Module as DIR;
+
 class Core {
 
 	const API_URL = 'https://ssl.glitzcloud.com/'; //生产环境url
@@ -115,6 +117,6 @@ class Core {
 
 
 
-	use Product, Inventory;
+	use DIR\Product, DIR\Inventory;
 
 }
