@@ -42,7 +42,9 @@ SDK由三部分组成
 ![avatar](http://storage-qiniu.9peak.net/9peak-twusa-sdk-php.png)
 
 后续开发无需关心“内核”，只需要专注内核模块和调用层的开发。
+
 ----------------------------------------------------------
+
 #### 内核模块
 <ul>
 	<li>存储位置：Peak\SDK\TWUsa\Module；</li>
