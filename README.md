@@ -52,18 +52,16 @@ SDK由三部分组成
 	</ul>
 
 ```php
-/**
-     * add a new sale order
-     * */
-     # 和方法同名的属性，定义api请求的url
-	protected static $getInventoryDetail = 'agent/v1/skus/inventory/query';
-	# 方法构造并返回api的参数
-    
-	protected static function getInventoryDetail (array &$param)
-	{
-		return [
-			'store_name' => $param['store_name'],
-			'product_sn' => is_string($param['product_sn']) ? $param['product_sn'] : join(',', $param['product_sn']),
-		];
-	}
+# 和方法同名的属性，定义api请求的url
+protected static $getInventoryDetail = 'agent/v1/skus/inventory/query';
+# 方法构造并返回api的参数
+
+protected static function getInventoryDetail (array &$param)
+{
+	return [
+		'store_name' => $param['store_name'],
+		'product_sn' => is_string($param['product_sn']) ? $param['product_sn'] : join(',', $param['product_sn']),
+	];
+}
+
 ```
