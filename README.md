@@ -43,7 +43,7 @@ SDK由三部分组成
 
 后续开发无需关心“内核”，只需要专注内核模块和调用层的开发。
 
-----------------------------------------------------------
+======================
 
 #### 内核模块
 <ul>
@@ -65,3 +65,25 @@ protected static function getInventoryDetail (array &$param)
 }
 
 ```
+
+
+
+
+#### 调用层
+<ul>
+	<li>存储位置：Peak\SDK；</li>
+	<li>均为public方法，且与内核模块的方法一一对应、名称一致；</li>
+	</ul>
+
+```php
+public function getInventoryDetail($storeName, $productSn):bool
+{
+	$res = self::$sdk->request(__FUNCTION__, [
+		'store_name' => $storeName,
+		'product_sn' => $productSn
+	]);
+	$this->result = self::$sdk->result;
+	return $res;
+}
+```
+
