@@ -35,4 +35,13 @@ class TWUsa {
 		return $res;
 	}
 
+    //出货
+    public function addOrder($param)
+    {
+        $res = self::$sdk->request(__FUNCTION__, $param);
+        $this->result = self::$sdk->result;
+        return $res;
+
+    }
+
 }
