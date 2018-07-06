@@ -41,7 +41,14 @@ class TWUsa {
         $res = self::$sdk->request(__FUNCTION__, $param);
         $this->result = self::$sdk->result;
         return $res;
+    }
 
+
+    public function estimateFreight($param)
+    {
+	    $res = self::$sdk->request(__FUNCTION__, $param);
+	    $this->result = self::$sdk->result;
+	    return $res;
     }
 
 }
