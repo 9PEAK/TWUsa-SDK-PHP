@@ -117,6 +117,6 @@ class Core {
 
 
 
-	use DIR\Product, DIR\Inventory, DIR\Order;
+	use DIR\Product, DIR\Inventory, DIR\Order, DIR\Express;
 
 }
