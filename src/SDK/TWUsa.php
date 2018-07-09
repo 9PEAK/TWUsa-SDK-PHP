@@ -52,9 +52,12 @@ class TWUsa {
     }
 
 
-    public function showOrderStatus($param)
+    public function showOrderStatus($storeName, $orderSn)
     {
-        $res = self::$sdk->request(__FUNCTION__, $param);
+        $res = self::$sdk->request(__FUNCTION__, [
+            'store_name' => $storeName,
+            'order_sn' => $orderSn
+        ]);
         $this->result = self::$sdk->result;
         return $res;
     }

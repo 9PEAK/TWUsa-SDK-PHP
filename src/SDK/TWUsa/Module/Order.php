@@ -67,8 +67,8 @@ trait Order {
     protected static function showOrderStatus (array &$param )
     {
         return [
-            'store_name' => $param['store_name'], # 仓库名称
-            'order_sn' => $param['order_sn'], # 平台订单号
+            'store_name' => $param['store_name'],
+            'order_sn' => is_string($param['order_sn']) ? $param['order_sn'] : join(',', $param['order_sn']),
         ];
 
     }
