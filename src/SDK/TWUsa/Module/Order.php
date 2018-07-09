@@ -60,5 +60,19 @@ trait Order {
     }
 
 
+    /**
+     * show a sale order status
+     * */
+    protected static $showOrderStatus = 'agent/v1/orders/order/status';
+    protected static function showOrderStatus (array &$param )
+    {
+        return [
+            'store_name' => $param['store_name'], # 仓库名称
+            'order_sn' => $param['order_sn'], # 平台订单号
+        ];
+
+    }
+
+
 
 }

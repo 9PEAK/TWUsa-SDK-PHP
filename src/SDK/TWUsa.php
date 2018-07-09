@@ -51,4 +51,12 @@ class TWUsa {
 	    return $res;
     }
 
+
+    public function showOrderStatus($param)
+    {
+        $res = self::$sdk->request(__FUNCTION__, $param);
+        $this->result = self::$sdk->result;
+        return $res;
+    }
+
 }
