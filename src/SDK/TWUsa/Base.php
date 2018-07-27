@@ -8,11 +8,9 @@ trait Base
 
 	private static function set_business_type($val)
 	{
-
         switch ($val){
             case 'B2B':
                 return 1;
-                break;
             case 'B2C':
                 return 2;
             case 'FBA':

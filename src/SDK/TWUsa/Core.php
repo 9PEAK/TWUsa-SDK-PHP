@@ -5,7 +5,7 @@ use Peak\SDK\TWUsa\Module as DIR;
 
 class Core {
 
-	const API_URL = 'https://ssl.glitzcloud.com/'; //生产环境url
+	const API_URL = 'https://ssl.glitzcloud.com/'; // 生产环境url
 	const API_URL_FOR_DEVELOPMENT = 'http://gztest.glitzcloud.com/'; // 开发环境url
 
 
