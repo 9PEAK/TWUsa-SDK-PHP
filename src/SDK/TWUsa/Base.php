@@ -8,7 +8,20 @@ trait Base
 
 	private static function set_business_type($val)
 	{
-		return $val==1||strtoupper($val)=='B2B' ? 1 : 2;
+
+        switch ($val){
+            case 'B2B':
+                return 1;
+                break;
+            case 'B2C':
+                return 2;
+            case 'FBA':
+                return 5;
+            default:
+                return 0;
+
+        }
+//		return $val==1||strtoupper($val)=='B2B' ? 1 : 2;
 	}
 
 	// 设置付款方式
