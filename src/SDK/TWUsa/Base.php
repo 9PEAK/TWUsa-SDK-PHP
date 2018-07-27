@@ -8,12 +8,14 @@ trait Base
 
 	private static function set_business_type($val)
 	{
+
 	    $type = [
 	        1 => 'B2B',
 	        2 => 'B2C',
 	        5 => 'FBA'
         ];
         return array_search($val, $type) ?: 0 ;
+
 
 	}
 
