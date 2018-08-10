@@ -13,7 +13,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider{
 				return new Core(
 					config('api.twusa.key'),
 					config('api.twusa.secret'),
-					true
+					false
 				);
 			});
 	}
