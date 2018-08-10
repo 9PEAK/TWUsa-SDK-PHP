@@ -4,8 +4,14 @@ namespace Peak\SDK\TWUsa\Module;
 trait Product {
 
 	// 添加商品
-	protected static $addSku = 'agent/v1/skus/skus/addskus';
-	protected static function addSku (array &$param)
+	public function addSku ($param):bool
+	{
+		return $this->request(__FUNCTION__, $param);
+	}
+
+	protected static $add_sku = 'agent/v1/skus/skus/addskus';
+
+	protected static function add_sku (array &$param)
 	{
 		return [
 			'product_sn' => $param['product_sn'], # sku

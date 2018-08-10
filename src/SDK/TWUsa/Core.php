@@ -79,6 +79,7 @@ class Core {
 	final public function request ($func, array $param)
 	{
 		$http = new \Curl\Curl();
+		$func = \Peak\Tool\Str::caseUnderscore($func);
 
 		try {
 

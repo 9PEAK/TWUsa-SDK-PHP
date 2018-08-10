@@ -3,6 +3,8 @@ namespace Peak\SDK;
 
 use Peak\SDK\TWUsa\Core as SDK;
 
+########## 即将弃用！！ #########
+
 class TWUsa {
 
 	private static $sdk;
