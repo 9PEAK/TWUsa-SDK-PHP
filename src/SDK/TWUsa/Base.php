@@ -8,18 +8,15 @@ trait Base
 
 	private static function set_business_type($val)
 	{
-        switch ($val){
-            case 'B2B':
-                return 1;
-            case 'B2C':
-                return 2;
-            case 'FBA':
-                return 5;
-            default:
-                return 0;
 
-        }
-//		return $val==1||strtoupper($val)=='B2B' ? 1 : 2;
+	    $type = [
+	        1 => 'B2B',
+	        2 => 'B2C',
+	        5 => 'FBA'
+        ];
+        return array_search($val, $type) ?: 0 ;
+
+
 	}
 
 	// 设置付款方式
