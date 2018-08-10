@@ -8,8 +8,17 @@ trait Inventory {
 	/**
 	 * get the product inventory detail
 	 * */
-	protected static $getInventoryDetail = 'agent/v1/skus/inventory/query';
-	protected static function getInventoryDetail (array &$param)
+
+    public function getInventoryDetail ($storeName,$orderSn):bool
+    {
+        return $this->request(__FUNCTION__, [
+            'store_name' => $storeName,
+            'order_sn' => $orderSn
+        ]);
+    }
+
+	protected static $get_inventory_detail = 'agent/v1/skus/inventory/query';
+	protected static function get_inventory_detail (array &$param)
 	{
 		return [
 			'store_name' => $param['store_name'],
@@ -17,9 +26,15 @@ trait Inventory {
 		];
 	}
 
+    public function transportType ($storeName):bool
+    {
+        return $this->request(__FUNCTION__, [
+            'store_name' => $storeName,
+        ]);
+    }
 
-	protected static $transportType = 'agent/v1/api/logistics/index';
-	protected static function transportType (array &$param)
+	protected static $transport_type = 'agent/v1/api/logistics/index';
+	protected static function transport_type (array &$param)
 	{
 		return [
 			'store_name' => $param['store_name']

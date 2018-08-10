@@ -5,13 +5,18 @@ namespace Peak\SDK\TWUsa\Module;
 trait Order {
 
 
-	protected static $getOrder = 'agent/v1/orders/order/status';
+    public function addOrder ($param):bool
+    {
+        return $this->request(__FUNCTION__, $param);
+    }
+
+	protected static $get_order = 'agent/v1/orders/order/status';
 
 	/**
 	 * add a new sale order
 	 * */
 	protected static $addOrder = 'agent/v1/orders/order/add';
-	protected static function addOrder (array &$param )
+	protected static function add_order (array &$param )
 	{
         return [
             'store_name' => $param['store_name'], # 仓库名称
@@ -49,8 +54,17 @@ trait Order {
     /**
      * add a new sale order
      * */
-	protected static $cancelOrder = 'agent/v1/orders/order/cancel';
-    protected static function cancelOrder (array &$param )
+
+    public function cancelOrder ($storeName,$orderSn):bool
+    {
+        return $this->request(__FUNCTION__, [
+            'store_name' => $storeName,
+            'order_sn' => $orderSn
+        ]);
+    }
+
+	protected static $cancel_order = 'agent/v1/orders/order/cancel';
+    protected static function cancel_order (array &$param )
     {
         return [
             'store_name' => $param['store_name'], # 仓库名称
@@ -63,8 +77,16 @@ trait Order {
     /**
      * show a sale order status
      * */
-    protected static $showOrderStatus = 'agent/v1/orders/order/status';
-    protected static function showOrderStatus (array &$param )
+    public function showOrderStatus ($storeName,$orderSn):bool
+    {
+        return $this->request(__FUNCTION__, [
+            'store_name' => $storeName,
+            'order_sn' => $orderSn
+        ]);
+    }
+
+    protected static $show_order_status = 'agent/v1/orders/order/status';
+    protected static function show_order_status (array &$param )
     {
         return [
             'store_name' => $param['store_name'],

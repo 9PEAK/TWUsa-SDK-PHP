@@ -8,8 +8,13 @@ trait Express {
 	/**
 	 * estimate freight
 	 * */
-	protected static $estimateFreight = 'agent/v1/api/express/query';
-	protected function estimateFreight (array &$param)
+    public function estimateFreight ($param):bool
+    {
+        return $this->request(__FUNCTION__, $param);
+    }
+
+	protected static $estimate_freight = 'agent/v1/api/express/query';
+	protected function estimate_freight (array &$param)
 	{
 		return @ [
 			'store_name' => $param['store_name'],
