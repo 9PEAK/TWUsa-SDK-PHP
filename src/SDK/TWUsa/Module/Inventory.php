@@ -13,7 +13,7 @@ trait Inventory {
     {
         return $this->request(__FUNCTION__, [
             'store_name' => $storeName,
-            'order_sn' => $orderSn
+            'product_sn' => $orderSn
         ]);
     }
 
