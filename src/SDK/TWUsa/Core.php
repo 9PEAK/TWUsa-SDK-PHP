@@ -1,4 +1,5 @@
 <?php
+
 namespace Peak\SDK\TWUsa;
 
 use Peak\SDK\TWUsa\Module as DIR;
