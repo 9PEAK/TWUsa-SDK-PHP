@@ -48,15 +48,15 @@ SDK由三部分组成
 #### 内核模块
 <ul>
 	<li>存储位置：Peak\SDK\TWUsa\Module；</li>
-	<li>方法、属性与API接口一一对应，且务必使用 <b>protected static</b> 修饰；</li>
+	<li>方法、属性与API接口一一对应，且务必使用 <b>protected static</b> 修饰，并使用下划线式命名；</li>
 	</ul>
 
 ```php
 # 和方法同名的属性，定义api请求的url
-protected static $getInventoryDetail = 'agent/v1/skus/inventory/query';
+protected static $get_inventory_detail = 'agent/v1/skus/inventory/query';
 # 方法构造并返回api的参数
 
-protected static function getInventoryDetail (array &$param)
+protected static function get_inventory_detail (array &$param)
 {
 	return [
 		'store_name' => $param['store_name'],
@@ -71,8 +71,8 @@ protected static function getInventoryDetail (array &$param)
 
 #### 调用层
 <ul>
-	<li>存储位置：Peak\SDK；</li>
-	<li>均为public方法，且与内核模块的方法一一对应、名称一致；</li>
+	<li>均为public方法，且与内核模块的方法一一对应、名称一致，使用“驼峰式”命名；</li>
+	<li>如果底层接口方法参数少于4个，务必分拆成多个参数。</li>
 	</ul>
 
 ```php
