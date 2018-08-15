@@ -5,17 +5,17 @@ namespace Peak\SDK\TWUsa\Module;
 trait Order {
 
 
-    public function addOrder ($param):bool
-    {
-        return $this->request(__FUNCTION__, $param);
-    }
-
 	protected static $get_order = 'agent/v1/orders/order/status';
 
 	/**
 	 * add a new sale order
 	 * */
-	protected static $addOrder = 'agent/v1/orders/order/add';
+    public function addOrder ($param):bool
+    {
+        return $this->request(__FUNCTION__, $param);
+    }
+
+	protected static $add_order = 'agent/v1/orders/order/add';
 	protected static function add_order (array &$param )
 	{
         return [
