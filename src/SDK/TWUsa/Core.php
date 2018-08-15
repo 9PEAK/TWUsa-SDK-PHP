@@ -77,7 +77,6 @@ class Core {
 	final public function request ($func, array $param)
 	{
 		$http = new \Curl\Curl();
-		$func = \Peak\Tool\Str::caseUnderscore($func);
 
 		try {
 
@@ -85,7 +84,7 @@ class Core {
 			$url = self::set_url(self::$$func);
 
 			#2 设置参数
-			$param = self::set_param(static::$func($param));
+			$param = self::set_param($param);
 
 			#3 发送请求
 			$http->post($url, $param);
