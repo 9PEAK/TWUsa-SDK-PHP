@@ -25,7 +25,7 @@ class Core {
 
 	private static function set_url (&$url)
 	{
-		return self::API_URL.$url;
+		return static::API_URL.$url;
 	}
 
 
