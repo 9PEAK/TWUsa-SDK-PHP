@@ -7,19 +7,17 @@ use Peak\SDK\TWUsa\Module as DIR;
 class Core {
 
 	const API_URL = 'https://ssl.glitzcloud.com/'; // 生产环境url
-	const API_URL_FOR_DEVELOPMENT = 'http://gztest.glitzcloud.com/'; // 开发环境url
 
 
-	private static $api_key, $api_secret, $dev_mode;
+	private static $api_key, $api_secret;
 
 	/**
 	 * @param $auth array , key is the class name of authenticate method, val is certificate
 	 * */
-	function __construct($apiKey, $apiSecret, $devMod=false)
+	function __construct($apiKey, $apiSecret)
 	{
 		self::$api_key = $apiKey;
 		self::$api_secret = $apiSecret;
-		self::$dev_mode = $devMod;
 	}
 
 	use Base;
@@ -27,8 +25,7 @@ class Core {
 
 	private static function set_url (&$url)
 	{
-		$domain = self::$dev_mode ? self::API_URL_FOR_DEVELOPMENT : self::API_URL;
-		return $domain.$url;
+		return self::API_URL.$url;
 	}
 
 
