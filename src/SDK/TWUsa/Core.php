@@ -104,7 +104,11 @@ class Core {
 				return true;
 			}
 
-			throw new \Exception(json_encode($http->response));
+			throw new \Exception(json_encode([
+				'url' => $url,
+				'param' => $param,
+				'response' => $http->response
+			]));
 
 		} catch ( \Exception $e) {
 			$this->result = json_decode($e->getMessage(), 1);
