@@ -2,8 +2,8 @@
 
 namespace Peak\SDK\TWUsa;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider{
-
+class ServiceProvider extends \Illuminate\Support\ServiceProvider
+{
 
 	public function register ()
 	{
@@ -11,9 +11,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider{
 			Core::class,
 			function (){
 				return new Core(
-					config('api.twusa.key'),
-					config('api.twusa.secret'),
-					false
+					config('services.twusa.key'),
+					config('services.twusa.secret')
 				);
 			}
 		);
@@ -22,9 +21,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider{
 			Test::class,
 			function (){
 				return new Test(
-					config('api.twusa.key'),
-					config('api.twusa.secret'),
-					false
+					config('services.twusa.key'),
+					config('services.twusa.secret')
 				);
 			}
 		);
