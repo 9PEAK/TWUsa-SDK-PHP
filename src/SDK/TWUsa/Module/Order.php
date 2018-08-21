@@ -27,7 +27,7 @@ trait Order {
 		        'business_type' => self::set_business_type($param['business_type']),
 		        'transport_id' => self::set_transport_id($param['transport_id']), # 快递公司名称
 		        'shipmethod_id' => $param['shipmethod_id'], # 派送方式
-		        'packagetype_id' => $param['packagetype_id'], // 包裹类型
+//		        'packagetype_id' => $param['packagetype_id'], // 包裹类型   wbz 不需要
 //			'declared_c' => $param['declared_c'], // 长
 //			'declared_k' => $param['declared_k'], // 宽
 //			'declared_g' => $param['declared_g'], // 高
