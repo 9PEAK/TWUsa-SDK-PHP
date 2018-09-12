@@ -23,7 +23,7 @@ trait Order {
 		        'order_sn' => $param['order_sn'], # 平台订单号
 		        'is_check' => $param['is_check'] ? 1 : 0, # 是否审核
 		        'pre_outflow_time' => $param['pre_outflow_time'], // date格式
-//			'remark' => $param['remark'],
+			    'remark' => $param['remark'],
 		        'business_type' => self::set_business_type($param['business_type']),
 		        'transport_id' => self::set_transport_id($param['transport_id']), # 快递公司名称
 		        'shipmethod_id' => $param['shipmethod_id'], # 派送方式
