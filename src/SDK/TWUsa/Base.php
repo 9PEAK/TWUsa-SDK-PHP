@@ -65,6 +65,19 @@ trait Base
 		return is_array($val) ? json_encode($val) : $val ;
 	}
 
+    //
+    private static function set_delivery_id($val)
+    {
+        if ( is_numeric($val)) return $val;
+
+        switch ($val) {
+            case '海运整柜': return 1;
+            case '海运拼箱 ': return 2;
+            case '零担卡车': return 3;
+            case '快递派送': return 4;
+        }
+
+    }
 
 
 }
