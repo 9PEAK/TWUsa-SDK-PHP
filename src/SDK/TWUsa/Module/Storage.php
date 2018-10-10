@@ -51,7 +51,40 @@ trait Storage {
     }
 
 
+    /**
+     * 查看入库单状态
+     * */
+    protected static $getStatus = 'agent/v1/asn/storage/getstatus';
 
+    public function  getStatus($param):bool
+    {
+
+        return $this->request(
+            __FUNCTION__,
+            [
+                'store_name' => $param['store_name'], # 仓库名称
+                'storage_sn' => $param['storage_sn'],
+            ]
+        );
+    }
+
+
+    /**
+     * 取消入库单
+     * */
+    protected static $cancel = 'agent/v1/asn/storage/cancel';
+
+    public function  cancel($param):bool
+    {
+
+        return $this->request(
+            __FUNCTION__,
+            [
+                'store_name' => $param['store_name'], # 仓库名称
+                'storage_sn' => $param['storage_sn'],
+            ]
+        );
+    }
 
 
 
