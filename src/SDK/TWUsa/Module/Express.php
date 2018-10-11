@@ -45,5 +45,18 @@ trait Express {
 	}
 */
 
+    /**
+     * 物流方式
+     * 进行出库地址选择时，美仓互联返回可供选择的物流方式
+     * */
+    protected static $logistics = 'agent/v1/api/logistics/index';
+    public function logistics ($param):bool
+    {
+        return $this->request(__FUNCTION__, @[
+            'store_name' => $param['store_name']
+        ]);
+    }
 
+
+    
 }
