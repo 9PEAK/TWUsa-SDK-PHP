@@ -9,6 +9,7 @@ trait Base
 	private static function set_business_type($val)
 	{
 
+        if ( is_numeric($val)) return $val;
 	    $type = [
 	        1 => 'B2B',
 	        2 => 'B2C',
