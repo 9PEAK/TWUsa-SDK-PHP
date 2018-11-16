@@ -19,7 +19,7 @@ trait Product {
 				'product_worth' => $param['product_worth'], # 商品金额
 				'declaration_weight' => $param['declaration_weight'], # 重量
 				'declaration_volume' => $param['declaration_volume'], # 体积
-                'packing_type' => $param['packing_type']
+                'packing_type' => $param['packing_type'],
 //			'description' => $param['product_sn'],
 //			'customs_code' => $param['product_sn'],
 //			'exist_battery' => $param['product_sn'],
@@ -28,6 +28,7 @@ trait Product {
 //			'num_in_master' => $param['product_sn'],
 //			'num_in_inner' => $param['product_sn'],
 //			'product_imgs' => $param['product_sn'],
+			'container_config' => $param['container_config'],  //json
 			]
 		);
 	}
