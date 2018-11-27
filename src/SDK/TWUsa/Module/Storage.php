@@ -22,11 +22,11 @@ trait Storage {
                 'width'  =>  @$param['width'] ?: '',
                 'height'  =>  @$param['height'] ?: '',
                 'container_no' => @$param['container_no'] ?: '',
-                'seal_no' => @$param['seal_no'], # 封号，商家根据实际箱封号如实填写
+                'seal_no' => @$param['seal_no'] ?: '', # 封号，商家根据实际箱封号如实填写
                 'reference_no' => @$param['reference_no'] ?: '',
                 'shipping_time' => $param['shipping_time'],  //发货时间
                 'schedule_time' => $param['schedule_time'],  //预计到达时间
-                'etd_time' => @$param['etd_time'],  //预计离港时间
+                'etd_time' => @$param['etd_time'] ?: '',  //预计离港时间
                 'eta_time' => @$param['etd_time'] ?: '',  //预计到港时间，如果填写必须小于等于schedule_time
                 'track_num' => @$param['track_num'],  #tracking ，如果source_type为FBA TRANSFER，必填，并且不能和以往的订单有重复
                 'remark' => @$param['remark'] ?: '',
@@ -37,7 +37,6 @@ trait Storage {
                 '45HQ'  => @$param['45HQ'] ?: '',
                 'pallet'  => @$param['pallet'] ?: '',
                 'carton'  => @$param['carton'] ?: '',
-//                'carton'  => @$param['carton_num'] ?: '',
 
                 'source_type' => $param['source_type'],  #入库来源类型  有三个值NORMAL ASN、FBA TRANSFER、OTHER
                 'carrier' => @$param['carrier'] ?: '',
