@@ -2,41 +2,46 @@
 
 namespace Peak\SDK\TWUsa;
 
-use Peak\SDK\TWUsa\Module as DIR;
+use Peak\SDK\TWUsa\Component as DIR;
 
 class Core {
 
-	const API_URL = 'https://ssl.glitzcloud.com/'; // 生产环境url
 
-
-	private static $api_key, $api_secret;
+	protected static $api_key, $api_secret, $api_url;
 
 	/**
-	 * @param $auth array , key is the class name of authenticate method, val is certificate
+	 * @param $apiKey string
+	 * @param $apiSecret string
+	 * @param $test boolean 是否是测试模式，测试模式下接口将请求测试的url
 	 * */
-	function __construct($apiKey, $apiSecret)
+	function __construct($apiKey, $apiSecret, $test=false)
 	{
 		self::$api_key = $apiKey;
 		self::$api_secret = $apiSecret;
+		$this->setMode($test);
+		self::$http = new \Curl\Curl();
 	}
 
-	use Base;
+	private static $http;
 
 
-	private static function set_url (&$url)
+	/**
+	 * 设置模式
+	 * @param $test bool 是否是测试模式，测试模式下接口将请求测试的url
+	 * */
+	public function setMode ($test=false)
 	{
-		return static::API_URL.$url;
+		self::$api_url = $test ? 'http://gztest.glitzcloud.com/agent/v1/' : 'https://ssl.glitzcloud.com/agent/v1/';
 	}
-
 
 
 	/**
 	 * 签名
 	 * */
-	private static function sign (&$dat)
+	private static function sign (array &$dat)
 	{
 		$str = '';
-		Ksort($dat);
+		ksort($dat);
 		foreach($dat as $key=>$val){
 			$str .= "{$key}{$val}";
 		}
@@ -45,18 +50,8 @@ class Core {
 
 
 
-	private static function set_param ($param)
-	{
-		$param['apikey'] = self::$api_key;
-		$param['secretkey'] = self::$api_secret;
-		$param['sign'] = self::sign($param);
-		unset ($param['secretkey']);
-		return $param;
-	}
 
-
-
-	public $result = null;
+	public $result;
 
 	/**
 	 * 4 获取请求的数据
@@ -70,55 +65,52 @@ class Core {
 
 
 	/**
-	 * 跨应用标准化请求业务
-	 * @param $func method name of request
-	 * @param $param param of request
+	 * HTTP请求
+	 * @param $url string. url of request
+	 * @param $param array. param of request
+	 * @param $method string. get or post
 	 * */
-	final public function request ($func, array $param)
+	final protected function request ($url, array $param=[], $method='post')
 	{
-		$http = new \Curl\Curl();
+		$http =& self::$http;
 
-		try {
+		$url = stripos($url, self::$api_url)===0 ? $url : self::$api_url.$url;
 
-			#1 设置url
-			$url = self::set_url(self::$$func);
+		$param['apikey'] = self::$api_key;
+		$param['secretkey'] = self::$api_secret;
+		$param['sign'] = self::sign($param);
+		unset ($param['secretkey']);
 
-			#2 设置参数
-			$param = self::set_param($param);
+		$http->$method($url, $param);
 
-			#3 发送请求
-			$http->post($url, $param);
-
-			#4 获取返回值
-			if ($http->error) {
-				throw new \Exception(json_encode([
-					'url' => $url,
-					'param' => $param,
-					'error' => 'Error: ' . $http->errorCode . ': ' . $http->errorMessage,
-					'response' =>$http->response
-				]));
-			}
-
-			if (@self::response($http->response, 'status')==200) {
-				$this->result = self::response($http->response, 'result');
-				return true;
-			}
-
-			throw new \Exception(json_encode([
+		if ($http->error) {
+			$this->result = [
 				'url' => $url,
 				'param' => $param,
+				'error' => 'Error: ' . $http->errorCode . ': ' . $http->errorMessage,
 				'response' => $http->response
-			]));
-
-		} catch ( \Exception $e) {
-			$this->result = json_decode($e->getMessage(), 1);
+			];
 			return false;
 		}
+
+		$this->result = (array)$http->response;
+		if (@$this->result['status']==200) {
+			$this->result = $this->result['result'];
+			return true;
+		}
+
+		return false;
 
 	}
 
 
 
-	use DIR\Product, DIR\Inventory, DIR\Order, DIR\Express, DIR\Storage;
+	use Common,
+//		DIR\Outbound,
+		DIR\Inbound,
+//		DIR\Inventory,
+//		DIR\Express,
+		DIR\Storage,
+		DIR\Product;
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Peak\SDK\TWUsa\Module;
+namespace Peak\SDK\TWUsa\Component;
 
 trait Inventory {
 
@@ -8,7 +8,7 @@ trait Inventory {
 	/**
 	 * get the product inventory detail
 	 * */
-	protected static $getInventoryDetail = 'agent/v1/skus/inventory/query';
+	protected static $getInventoryDetail = 'skus/inventory/query';
     public function getInventoryDetail ($warehouse, $sku):bool
     {
         return $this->request(__FUNCTION__, [
@@ -27,7 +27,7 @@ trait Inventory {
 	}*/
 
 
-	protected static $transportType = 'agent/v1/api/logistics/index';
+	protected static $transportType = 'api/logistics/index';
 
     public function transportType ($warehouse):bool
     {

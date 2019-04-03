@@ -1,6 +1,6 @@
 <?php
 
-namespace Peak\SDK\TWUsa\Module;
+namespace Peak\SDK\TWUsa\Component;
 
 trait Express {
 
@@ -8,7 +8,7 @@ trait Express {
 	/**
 	 * estimate freight
 	 * */
-	protected static $estimateFreight = 'agent/v1/api/express/query';
+	protected static $estimateFreight = 'api/express/query';
     public function estimateFreight ($param):bool
     {
         return $this->request(__FUNCTION__, @[
@@ -49,7 +49,7 @@ trait Express {
      * 物流方式
      * 进行出库地址选择时，美仓互联返回可供选择的物流方式
      * */
-    protected static $logistics = 'agent/v1/api/logistics/index';
+    protected static $logistics = 'api/logistics/index';
     public function logistics ($param):bool
     {
         return $this->request(__FUNCTION__, @[

@@ -16,18 +16,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 				);
 			}
 		);
-
-		$this->app->singleton(
-			Test::class,
-			function (){
-				return new Test(
-					config('services.twusa.key'),
-					config('services.twusa.secret')
-				);
-			}
-		);
 	}
-
-
 
 }
