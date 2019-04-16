@@ -108,7 +108,7 @@ class Core {
 	use Common,
 //		DIR\Outbound,
 		DIR\Inbound,
-//		DIR\Inventory,
+		DIR\Inventory,
 //		DIR\Express,
 		DIR\Storage,
 		DIR\Product;

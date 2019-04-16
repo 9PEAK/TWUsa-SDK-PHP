@@ -5,17 +5,23 @@ namespace Peak\SDK\TWUsa\Component;
 trait Inventory {
 
 
-	/**
-	 * get the product inventory detail
-	 * */
-	protected static $getInventoryDetail = 'skus/inventory/query';
-    public function getInventoryDetail ($warehouse, $sku):bool
+    /** 商品库存查询
+     * @param array $param
+     * @return bool
+     */
+    public function getInventoryDetail ($storeName, $sn):bool
     {
-        return $this->request(__FUNCTION__, [
-            'store_name' => $warehouse,
-            'product_sn' => is_string($sku) ? $sku : join(',', $sku),
-        ]);
+
+        return $this->request(
+            'skus/inventory/query',
+            [
+                'store_name' => $storeName,
+                'product_sn' => is_array($sn) ? join(',', $sn) : $sn
+            ]
+        );
     }
+
+
 
 /*
 	protected static function get_inventory_detail (array &$param)
