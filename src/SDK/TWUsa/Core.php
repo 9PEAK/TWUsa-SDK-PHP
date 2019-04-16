@@ -58,10 +58,10 @@ class Core {
 	 * @param $key 支持链式调用 默认null，整个请求结果
 	 * @return mixed array | string
 	 * */
-	private static function response ($dat, $key=null)
-	{
-		return \Peak\Tool\Arr::array_key_chain(is_array($dat) ? $dat : json_decode(json_encode($dat), 1), $key, '.');
-	}
+//	private static function response ($dat, $key=null)
+//	{
+//		return \Peak\Tool\Arr::array_key_chain(is_array($dat) ? $dat : json_decode(json_encode($dat), 1), $key, '.');
+//	}
 
 
 	/**
