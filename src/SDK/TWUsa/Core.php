@@ -106,11 +106,11 @@ class Core {
 
 
 	use Common,
-//		DIR\Outbound,
+		DIR\Outbound,
 		DIR\Inbound,
 		DIR\Inventory,
-//		DIR\Express,
-		DIR\Storage,
+		DIR\Express,
+//		DIR\Storage,
 		DIR\Product;
 
 }
