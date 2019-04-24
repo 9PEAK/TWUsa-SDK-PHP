@@ -257,7 +257,7 @@ trait Outbound {
 	 * */
     public function addOutboundOrder (array $order, array $product):bool
     {
-	    $order['products'] =& json_encode($product);
+	    $order['products'] = json_encode($product);
         return $this->request(
 	        'orders/order/add',
 	        $order
