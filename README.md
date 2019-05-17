@@ -1,26 +1,108 @@
 # TWUsa-SDK-PHP
 
+美仓互联TWUsa SDK包，API文档：http://vip.twusa.cn/index.php?r=web/wiki/index 。
+
 ### 安装
 > composer require 9peak/twusa-sdk-php
 
 
 ### 使用
+初始化[直接实例化]
 ```php
-# 初始化
-$api = new \Peak\SDK\TWUsa (
+$sdk = new \Peak\SDK\TWUsa (
 	$apiKey,
 	$apiSecret,
-	true // true生产环境，false开发环境，二者请求的url地址不同
+	true // true生产环境，false开发环境，二者域名和协议有别
 );
+```
+
+初始化[自动依赖注入，目前仅支持Laravel]<br>
+配置 config\services.php 
+```php
+return [
+    // ...
+    // 加入AK和AS配置
+    'twusa' => [
+        'key' => env('TWUSA_AMZ_KEY', 'xxxx'),
+        'secret' => env('TWUSA_AMZ_SECRET', 'xxxx')
+    ],
+]
+```
+
+配置 \App\Providers\AppServiceProvider.php 
+```php
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    // 加入Provider
+	use \Peak\SDK\TWUsa\ServiceProvider;
+
+    public function register()
+    {
+        // 注册SDK
+        $this->peakRegisterTWUsaSdk();
+        // ...
+    }
+
+    // ...
+}
+```
+
+模式切换
+
+```php
+// 使用mode方法进行切换，支持链式调用
+$sdk->mode(true) // 生产环境正式账号
+    ->mode(false); // 测试环境测试账号
+```
 
 
-# 获取库存
-$res = $api->getInventoryDetail(
+参数设置&接口请求
+
+```php
+# 简单接口：获取库存
+$res = $sdk->getInventoryDetail(
 	'The Warehouse Usa' , // 仓库名
 	'abc,def,gogogo' // sku
 );
 
-# 返回数据请参看： http://vip.twusa.cn/index.php?r=web/wiki/inventory
+
+# 复杂接口：创建出库单
+$dat = []; // 预设参数
+// 参数设置方法通常是set开头，并且支持链式调用
+$res = $sdk->setStoreName('abc', $dat)
+    ->setOutboundOrderOrderSn('order-1', $dat)
+    ->setOutboundOrderIsCheck(false', $dat)
+    ->setOutboundOrderOutflowTime('2019-09-09', $dat)
+    ->setOutboundOrderRemark('备注', $dat)
+    ->setOutboundOrderBusinessType(1', $dat)
+    ->setOutboundOrderTransportId('sto-20190909-a', $dat)
+    ->setOutboundOrderShipmethod(1, $dat)
+    ->setOutboundOrderPackageType(2, $dat)
+    ->setOutboundOrderName('特朗普', $dat)
+    ->setOutboundOrderTel('0123456789', $dat)
+    ->setOutboundOrderPostCode(66666, $dat)
+    ->setOutboundOrderAddress('华盛顿大道白宫3楼椭圆型办公室', $dat)
+    ->setOutboundOrderCountry('US', $dat)
+    ->setOutboundOrderProvince('WD', $dat)
+    ->setOutboundOrderCity('DC', $dat)
+    ->setOutboundOrderBillType('第三方平台支付', $dat)
+    ->setOutboundOrderForecastApplyPackage('使用仓库箱子', $dat)
+    ->setOutboundOrderPackageMethodEditable(false', $dat)
+// 请求方法通常是add、get等开头，返回bool
+    ->addOutboundOrder(
+        $dat,
+        [
+            $sdk->setOutboundOrderProduct('sku1', 1, 1),
+            $sdk->setOutboundOrderProduct('sku2', 2, 2),
+            $sdk->setOutboundOrderProduct('sku3', 3, 3),
+        ]
+    );
+    
+
 if ( $res) {
 	// 请求成功
 	$dat = $api->result;
@@ -28,62 +110,17 @@ if ( $res) {
 	// 请求失败
 	print_r($api->result);
 }
-
 ```
 
-### 编写
-SDK由三部分组成
-<ul>
-	<li>内核</li>
-	<li>内核模块（内置的方法对接美仓API）</li>
-	<li>调用层（外部调用）</li>
-</ul>
-
-![avatar](http://storage-qiniu.9peak.net/9peak-twusa-sdk-php.png)
-
-后续开发无需关心“内核”，只需要专注内核模块和调用层的开发。
-
-======================
-
-#### 内核模块
-<ul>
-	<li>存储位置：Peak\SDK\TWUsa\Module；</li>
-	<li>方法、属性与API接口一一对应，且务必使用 <b>protected static</b> 修饰，并使用下划线式命名；</li>
-	</ul>
-
+### 扩展
+SDK暂时不支持全部接口，开发者可自行对其扩展；根据官方的API文档，SDK基于其业务拆分成下列组件，建议沿用该方式扩展编码。 <br>
+组件文件夹 \Peak\SDK\TWUsa\Component
 ```php
-# 和方法同名的属性，定义api请求的url
-protected static $get_inventory_detail = 'agent/v1/skus/inventory/query';
-# 方法构造并返回api的参数
-
-protected static function get_inventory_detail (array &$param)
-{
-	return [
-		'store_name' => $param['store_name'],
-		'product_sn' => is_string($param['product_sn']) ? $param['product_sn'] : join(',', $param['product_sn']),
-	];
-}
-
+# 组件
+	use Common, // 公用组件
+		DIR\Outbound, // 出库单
+		DIR\Inbound, // 入库单
+		DIR\Inventory, // 库存
+		DIR\Express, // 快递
+		DIR\Product; // 产品
 ```
-
-
-
-
-#### 调用层
-<ul>
-	<li>均为public方法，且与内核模块的方法一一对应、名称一致，使用“驼峰式”命名；</li>
-	<li>如果底层接口方法参数少于4个，务必分拆成多个参数。</li>
-	</ul>
-
-```php
-public function getInventoryDetail($storeName, $productSn):bool
-{
-	$res = self::$sdk->request(__FUNCTION__, [
-		'store_name' => $storeName,
-		'product_sn' => $productSn
-	]);
-	$this->result = self::$sdk->result;
-	return $res;
-}
-```
-

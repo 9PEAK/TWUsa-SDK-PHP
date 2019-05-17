@@ -4,7 +4,8 @@ namespace Peak\SDK\TWUsa;
 
 use Peak\SDK\TWUsa\Component as DIR;
 
-class Core {
+class Core
+{
 
 
 	protected static $api_key, $api_secret, $api_url;
@@ -18,7 +19,7 @@ class Core {
 	{
 		self::$api_key = $apiKey;
 		self::$api_secret = $apiSecret;
-		$this->setMode($test);
+		$this->mode($test);
 		self::$http = new \Curl\Curl();
 	}
 
@@ -28,27 +29,28 @@ class Core {
 	/**
 	 * 设置模式
 	 * @param $test bool 是否是测试模式，测试模式下接口将请求测试的url
+	 * @return object $this
 	 * */
-	public function setMode ($test=false)
+	public function mode ($test=false)
 	{
 		self::$api_url = $test ? 'http://gztest.glitzcloud.com/agent/v1/' : 'https://ssl.glitzcloud.com/agent/v1/';
+		return $this;
 	}
 
 
 	/**
 	 * 签名
+	 * @param $dat array 一维数组，参与签名的参数
 	 * */
 	private static function sign (array &$dat)
 	{
 		$str = '';
 		ksort($dat);
-		foreach($dat as $key=>$val){
+		foreach($dat as $key=>$val) {
 			$str .= "{$key}{$val}";
 		}
 		return md5($str);
 	}
-
-
 
 
 	public $result;
@@ -104,7 +106,7 @@ class Core {
 	}
 
 
-
+	# 组件
 	use Common,
 		DIR\Outbound,
 		DIR\Inbound,

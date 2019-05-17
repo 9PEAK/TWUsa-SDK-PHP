@@ -2,20 +2,29 @@
 
 namespace Peak\SDK\TWUsa;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+trait ServiceProvider
 {
 
-	public function register ()
+	/**
+	 * 注册SDK组件
+	 * @param $app string 框架名称，目前仅支持Laravel
+	 * */
+	public function peakRegisterTWUsaSdk ($app='Laravel')
 	{
-		$this->app->singleton(
-			Core::class,
-			function (){
-				return new Core(
-					config('services.twusa.key'),
-					config('services.twusa.secret')
+		switch ($app) {
+			case 'Laravel' :
+				return app()->singleton(
+					Core::class,
+					function (){
+						return self::make(
+							config('services.twusa.key'),
+							config('services.twusa.secret')
+						);
+					}
 				);
-			}
-		);
+		}
+
 	}
+
 
 }
