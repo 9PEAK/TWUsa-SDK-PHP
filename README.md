@@ -114,13 +114,47 @@ if ( $res) {
 
 ### 扩展
 SDK暂时不支持全部接口，开发者可自行对其扩展；根据官方的API文档，SDK基于其业务拆分成下列组件，建议沿用该方式扩展编码。 <br>
-组件文件夹 \Peak\SDK\TWUsa\Component
+组件置于 \Peak\SDK\TWUsa\Component 之中，集成于 \Peak\SDK\TWUsa\Core.php。
 ```php
-# 组件
+namespace Peak\SDK\TWUsa;
+
+class Core
+{
+    // code...
+    
+    # 组件
 	use Common, // 公用组件
 		DIR\Outbound, // 出库单
 		DIR\Inbound, // 入库单
 		DIR\Inventory, // 库存
 		DIR\Express, // 快递
 		DIR\Product; // 产品
+		
+}
+```
+
+扩展的请求方法务必使用内置的 <b>$this->request()</b> 函数，该方法集成签名、http请求、异常处理。
+```php
+namespace Peak\SDK\TWUsa\Component;
+
+trait Inbound {
+
+    /**
+     * 查看入库单状态
+     * @param $storeName string 仓库名称
+     * @param $orderSn string 入库单单号
+     * */
+    public function getInboundOrderStatus ($storeName, $orderSn):bool
+    {
+
+        return $this->request(
+            self::$api_url.'asn/storage/getstatus',
+            [
+                'store_name' => $storeName, # 仓库名称
+                'storage_sn' => is_string($orderSn) ? $orderSn : join(',', $orderSn)
+            ]
+        );
+    }
+
+}
 ```
