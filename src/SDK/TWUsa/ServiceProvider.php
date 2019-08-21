@@ -16,7 +16,7 @@ trait ServiceProvider
 				return app()->singleton(
 					Core::class,
 					function (){
-						return self::make(
+                        return new Core(
 							config('services.twusa.key'),
 							config('services.twusa.secret')
 						);
