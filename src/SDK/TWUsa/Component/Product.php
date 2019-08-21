@@ -105,7 +105,7 @@ trait Product {
     {
 	    $param['container_config'] = is_array($param['container_config']) ? json_encode($param['container_config']) : $param['container_config'];
         return $this->request(
-            'sk us/skus/editskus',
+            'skus/skus/editskus',
             $param
         );
     }
